@@ -37,7 +37,7 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(
 	//Number Buttons
 	wxButton* btnposneg = new wxButton(this, 98, "+/-", wxPoint(25, 350), wxSize(100, 50));
 	wxButton* btn0 = new wxButton(this, 100, "0", wxPoint(125, 350), wxSize(100, 50));
-	wxButton* btnpoint = new wxButton(this, 99, "0", wxPoint(225, 350), wxSize(100, 50));
+	wxButton* btnpoint = new wxButton(this, 99, ".", wxPoint(225, 350), wxSize(100, 50));
 	wxButton* btn1 = new wxButton(this, 101, "1", wxPoint(25, 300), wxSize(100, 50));
 	wxButton* btn2 = new wxButton(this, 102, "2", wxPoint(125, 300), wxSize(100, 50));
 	wxButton* btn3 = new wxButton(this, 103, "3", wxPoint(225, 300), wxSize(100, 50));
@@ -87,24 +87,43 @@ void Main::OnClick(wxCommandEvent& evt) {
 			pos = true;
 		}
 	}
+	else if (id == 99) {
+		if (!decimalpoint)
+		numdisplay->SetLabel(numdisplay->GetLabel() + '.');
+		decimalpoint = true;
+	}
+	//Numbers
 	else if (id >= 100 && id <= 109) {
 
-	}
-	else if (id >= 200 && id <= 205) {
+		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
 
+		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
 	}
+	else if (id == 200) {
+		//Do math here
+		numdisplay->SetLabel(numdisplay->GetLabel() + '=');
+	}
+	else if (id >= 201 && id <= 205) {
+		decimalpoint = false;
+
+		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
+		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
+	}
+	//Binary
 	else if (id == 301) {
-
+		
 	}
+	//Dec
 	else if (id == 302) {
 
 	}
+	//Hex
 	else if (id == 303) {
 
 	}
+	//C
 	else if (id == 300) {
 		numdisplay->SetLabel("");
 	}
-
-	numdisplay->SetLabel(numdisplay->GetLabel());
+	evt.Skip();
 }
