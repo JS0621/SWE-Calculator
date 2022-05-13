@@ -112,15 +112,18 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//Binary
 	else if (id == 301) {
-		
+		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
+		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
 	}
 	//Dec
 	else if (id == 302) {
-
+		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
+		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
 	}
 	//Hex
 	else if (id == 303) {
-
+		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
+		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
 	}
 	//C
 	else if (id == 300) {
