@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "ButtonFactory.h"
 
 BEGIN_EVENT_TABLE(Main, wxFrame)
 //Number buttons
@@ -34,43 +35,45 @@ END_EVENT_TABLE()
 
 Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(800, 500), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 ) {
+	ButtonFactory* factory = new ButtonFactory;
 	//Number Buttons
-	wxButton* btnposneg = new wxButton(this, 98, "+/-", wxPoint(25, 350), wxSize(100, 50));
-	wxButton* btn0 = new wxButton(this, 100, "0", wxPoint(125, 350), wxSize(100, 50));
-	wxButton* btnpoint = new wxButton(this, 99, ".", wxPoint(225, 350), wxSize(100, 50));
-	wxButton* btn1 = new wxButton(this, 101, "1", wxPoint(25, 300), wxSize(100, 50));
-	wxButton* btn2 = new wxButton(this, 102, "2", wxPoint(125, 300), wxSize(100, 50));
-	wxButton* btn3 = new wxButton(this, 103, "3", wxPoint(225, 300), wxSize(100, 50));
-	wxButton* btn4 = new wxButton(this, 104, "4", wxPoint(25, 250), wxSize(100, 50));
-	wxButton* btn5 = new wxButton(this, 105, "5", wxPoint(125, 250), wxSize(100, 50));
-	wxButton* btn6 = new wxButton(this, 106, "6", wxPoint(225, 250), wxSize(100, 50));
-	wxButton* btn7 = new wxButton(this, 107, "7", wxPoint(25, 200), wxSize(100, 50));
-	wxButton* btn8 = new wxButton(this, 108, "8", wxPoint(125, 200), wxSize(100, 50));
-	wxButton* btn9 = new wxButton(this, 109, "9", wxPoint(225, 200), wxSize(100, 50));
+	wxButton* btnposneg = factory->CreateButton(this, 98, "+/-", wxPoint(25, 350), wxSize(100, 50));
+	wxButton* btn0 = factory->CreateButton(this, 100, "0", wxPoint(125, 350), wxSize(100, 50));
+	wxButton* btnpoint = factory->CreateButton(this, 99, ".", wxPoint(225, 350), wxSize(100, 50));
+	wxButton* btn1 = factory->CreateButton(this, 101, "1", wxPoint(25, 300), wxSize(100, 50));
+	wxButton* btn2 = factory->CreateButton(this, 102, "2", wxPoint(125, 300), wxSize(100, 50));
+	wxButton* btn3 = factory->CreateButton(this, 103, "3", wxPoint(225, 300), wxSize(100, 50));
+	wxButton* btn4 = factory->CreateButton(this, 104, "4", wxPoint(25, 250), wxSize(100, 50));
+	wxButton* btn5 = factory->CreateButton(this, 105, "5", wxPoint(125, 250), wxSize(100, 50));
+	wxButton* btn6 = factory->CreateButton(this, 106, "6", wxPoint(225, 250), wxSize(100, 50));
+	wxButton* btn7 = factory->CreateButton(this, 107, "7", wxPoint(25, 200), wxSize(100, 50));
+	wxButton* btn8 = factory->CreateButton(this, 108, "8", wxPoint(125, 200), wxSize(100, 50));
+	wxButton* btn9 = factory->CreateButton(this, 109, "9", wxPoint(225, 200), wxSize(100, 50));
 
 	//Math Buttons
-	wxButton* btnplus = new wxButton(this, 201, "+", wxPoint(350, 325), wxSize(100, 50));
-	wxButton* btnminus = new wxButton(this, 202, "-", wxPoint(450, 325), wxSize(100, 50));
-	wxButton* btnmult = new wxButton(this, 203, "*", wxPoint(350, 275), wxSize(100, 50));
-	wxButton* btndiv = new wxButton(this, 204, "/", wxPoint(450, 275), wxSize(100, 50));
-	wxButton* btnmod = new wxButton(this, 205, "mod", wxPoint(350, 225), wxSize(100, 50));
-	wxButton* btneq = new wxButton(this, 200, "=", wxPoint(450, 225), wxSize(100, 50));
+	wxButton* btnplus = factory->CreateButton(this, 201, "+", wxPoint(350, 325), wxSize(100, 50));
+	wxButton* btnminus = factory->CreateButton(this, 202, "-", wxPoint(450, 325), wxSize(100, 50));
+	wxButton* btnmult = factory->CreateButton(this, 203, "*", wxPoint(350, 275), wxSize(100, 50));
+	wxButton* btndiv = factory->CreateButton(this, 204, "/", wxPoint(450, 275), wxSize(100, 50));
+	wxButton* btnmod = factory->CreateButton(this, 205, "mod", wxPoint(350, 225), wxSize(100, 50));
+	wxButton* btneq = factory->CreateButton(this, 200, "=", wxPoint(450, 225), wxSize(100, 50));
 
 	//binary and stuff buttons
-	wxButton* btnbin = new wxButton(this, 301, "BIN", wxPoint(575, 325), wxSize(100, 50));
-	wxButton* btndec = new wxButton(this, 302, "DEC", wxPoint(575, 275), wxSize(100, 50));
-	wxButton* btnhex = new wxButton(this, 303, "HEX", wxPoint(575, 225), wxSize(100, 50));
+	wxButton* btnbin = factory->CreateButton(this, 301, "BIN", wxPoint(575, 325), wxSize(100, 50));
+	wxButton* btndec = factory->CreateButton(this, 302, "DEC", wxPoint(575, 275), wxSize(100, 50));
+	wxButton* btnhex = factory->CreateButton(this, 303, "HEX", wxPoint(575, 225), wxSize(100, 50));
 	
-	wxButton* btnC = new wxButton(this, 300, "C", wxPoint(675, 175), wxSize(100, 50));
+	wxButton* btnC = factory->CreateButton(this, 300, "C", wxPoint(675, 175), wxSize(100, 50));
 
 	//Textbox
 	numdisplay = new wxTextCtrl(this, wxID_ANY, "", wxPoint(75, 50), wxSize(600, 100), wxTE_READONLY | wxTE_RIGHT);
 	wxFont display(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
 	numdisplay->SetFont(display);
+	delete factory;
 }
 
 Main::~Main() {
-
+	delete factory;
 }
 
 void Main::OnClick(wxCommandEvent& evt) {
