@@ -103,6 +103,7 @@ void Main::OnClick(wxCommandEvent& evt) {
 		//Do math here
 		numdisplay->SetLabel(numdisplay->GetLabel() + '=');
 	}
+	//Operators
 	else if (id >= 201 && id <= 205) {
 		decimalpoint = false;
 
