@@ -33,8 +33,7 @@ EVT_BUTTON(303, Main::OnClick)
 EVT_BUTTON(300, Main::OnClick)
 END_EVENT_TABLE()
 
-Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(800, 500), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX)
-) {
+Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(800, 500), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX)) {
 	ButtonFactory* factory = new ButtonFactory;
 	//Number Buttons
 	wxButton* btnposneg = factory->CreateButton(this, 98, "+/-", wxPoint(25, 350), wxSize(100, 50));
