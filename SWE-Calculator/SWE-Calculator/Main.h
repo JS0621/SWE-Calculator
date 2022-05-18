@@ -17,7 +17,6 @@ private:
 	bool isoperator = false;
 	float num1;
 	float num2;
-	wxButton* btnmod;
 
 public:
 	DECLARE_EVENT_TABLE();

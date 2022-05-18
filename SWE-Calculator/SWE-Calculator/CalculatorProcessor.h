@@ -7,6 +7,8 @@ private:
 
 	static CalculatorProcessor* calcprocessor;
 public:
+	//Destructor
+	~CalculatorProcessor();
 	//Assignment Constructor
 	CalculatorProcessor& operator=(const CalculatorProcessor& _other) = delete;
 	//Copy Constructor

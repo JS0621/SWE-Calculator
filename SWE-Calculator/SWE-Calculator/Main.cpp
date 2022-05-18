@@ -93,7 +93,6 @@ void Main::OnClick(wxCommandEvent& evt) {
 	else if (id == 99) {
 		if (!decimalpoint) {
 			numdisplay->SetLabel(numdisplay->GetLabel() + '.');
-			btnmod->Disable();
 		}
 		decimalpoint = true;
 	}
@@ -107,12 +106,12 @@ void Main::OnClick(wxCommandEvent& evt) {
 	else if (id == 200) {
 		//Do math here
 		wxString number = numdisplay->GetLabel();
-
+		number.erase(0, 1);
 		num2 = wxAtof(number);
 		isoperator = false;
 		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
-		calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
-		btnmod->Enable();
+		float result = calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
+		numdisplay->SetLabel(std::to_string(result));
 	}
 	//Operators
 	else if (id >= 201 && id <= 205) {

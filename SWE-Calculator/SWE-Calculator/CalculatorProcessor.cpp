@@ -1,6 +1,16 @@
 #include "CalculatorProcessor.h"
 #include "wx/wx.h"
 
+CalculatorProcessor::CalculatorProcessor() {
+	
+}
+CalculatorProcessor* CalculatorProcessor::calcprocessor = nullptr;
+
+CalculatorProcessor::~CalculatorProcessor()
+{
+	delete calcprocessor;
+}
+
 CalculatorProcessor* CalculatorProcessor::GetInstance()
 {
 	if (calcprocessor == nullptr) {
@@ -11,7 +21,7 @@ CalculatorProcessor* CalculatorProcessor::GetInstance()
 
 float CalculatorProcessor::InputManager(wxString input, float num1, float num2)
 {
-	float result;
+	float result = -1.0f;
 	if (input.Contains("+")) {
 		result = Addition(num1, num2);
 	}
@@ -25,7 +35,7 @@ float CalculatorProcessor::InputManager(wxString input, float num1, float num2)
 		result = Division(num1, num2);
 	}
 	else if (input.Contains("mod")) {
-		result = (float)Modulo(num1, num2);
+		result = (float)Modulo((int)num1, (int)num2);
 	}
 	return result;
 }
