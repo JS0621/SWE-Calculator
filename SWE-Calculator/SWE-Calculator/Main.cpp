@@ -1,5 +1,6 @@
 #include "Main.h"
 #include "ButtonFactory.h"
+#include "CalculatorProcessor.h"
 
 BEGIN_EVENT_TABLE(Main, wxFrame)
 //Number buttons
@@ -61,7 +62,7 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(
 	wxButton* btnbin = factory->CreateButton(this, 301, "BIN", wxPoint(575, 325), wxSize(100, 50));
 	wxButton* btndec = factory->CreateButton(this, 302, "DEC", wxPoint(575, 275), wxSize(100, 50));
 	wxButton* btnhex = factory->CreateButton(this, 303, "HEX", wxPoint(575, 225), wxSize(100, 50));
-	
+
 	wxButton* btnC = factory->CreateButton(this, 300, "C", wxPoint(675, 175), wxSize(100, 50));
 
 	//Textbox
@@ -90,8 +91,10 @@ void Main::OnClick(wxCommandEvent& evt) {
 		}
 	}
 	else if (id == 99) {
-		if (!decimalpoint)
-		numdisplay->SetLabel(numdisplay->GetLabel() + '.');
+		if (!decimalpoint) {
+			numdisplay->SetLabel(numdisplay->GetLabel() + '.');
+			btnmod->Disable();
+		}
 		decimalpoint = true;
 	}
 	//Numbers
@@ -103,14 +106,25 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	else if (id == 200) {
 		//Do math here
-		numdisplay->SetLabel(numdisplay->GetLabel() + '=');
+		wxString number = numdisplay->GetLabel();
+
+		num2 = wxAtof(number);
+		isoperator = false;
+		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+		calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
+		btnmod->Enable();
 	}
 	//Operators
 	else if (id >= 201 && id <= 205) {
 		decimalpoint = false;
-
-		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
-		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
+		if (!isoperator) {
+			wxString number = numdisplay->GetLabel();
+			
+			num1 = wxAtof(number);
+			wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
+			numdisplay->SetLabel(btn->GetLabel());
+		}
+		isoperator = true;
 	}
 	//Binary
 	else if (id == 301) {
