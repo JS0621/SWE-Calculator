@@ -55,7 +55,7 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(
 	wxButton* btnminus = factory->CreateButton(this, 202, "-", wxPoint(450, 325), wxSize(100, 50));
 	wxButton* btnmult = factory->CreateButton(this, 203, "*", wxPoint(350, 275), wxSize(100, 50));
 	wxButton* btndiv = factory->CreateButton(this, 204, "/", wxPoint(450, 275), wxSize(100, 50));
-	wxButton* btnmod = factory->CreateButton(this, 205, "mod", wxPoint(350, 225), wxSize(100, 50));
+	wxButton* btnmod = factory->CreateButton(this, 205, "%", wxPoint(350, 225), wxSize(100, 50));
 	wxButton* btneq = factory->CreateButton(this, 200, "=", wxPoint(450, 225), wxSize(100, 50));
 
 	//binary and stuff buttons
@@ -142,6 +142,9 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//C
 	else if (id == 300) {
+		isoperator = false;
+		decimalpoint = false;
+		pos = true;
 		numdisplay->SetLabel("");
 	}
 	evt.Skip();
