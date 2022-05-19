@@ -1,5 +1,6 @@
 #include "CalculatorProcessor.h"
 #include "wx/wx.h"
+#include <cmath>
 
 CalculatorProcessor::CalculatorProcessor() {
 	
@@ -34,8 +35,8 @@ float CalculatorProcessor::InputManager(wxString input, float num1, float num2)
 	else if (input.Contains("/")) {
 		result = Division(num1, num2);
 	}
-	else if (input.Contains("mod")) {
-		result = (float)Modulo((int)num1, (int)num2);
+	else if (input.Contains("%")) {
+		result = Modulo(round(num1), round(num2));
 	}
 	return result;
 }
