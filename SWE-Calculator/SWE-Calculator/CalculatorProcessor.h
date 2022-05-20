@@ -1,11 +1,27 @@
 #pragma once
+#include <vector>
+#include <iostream>
+
+class IBaseCommand;
+class AddCommand;
+class SubtractCommand;
+class MultiplyCommand;
+class DivideCommand;
 class wxString;
+
 class CalculatorProcessor
 {
 private:
 	CalculatorProcessor();
 
 	static CalculatorProcessor* calcprocessor;
+
+	std::vector<IBaseCommand*> commands;
+	AddCommand* Add;
+	SubtractCommand* Sub;
+	MultiplyCommand* Mult;
+	DivideCommand* Div;
+
 public:
 	//Destructor
 	~CalculatorProcessor();
@@ -18,10 +34,6 @@ public:
 
 	float InputManager(wxString input, float num1, float num2);
 	//Math functions
-	float Addition(float num1, float num2);
-	float Subtraction(float num1, float num2);
-	float Multiplication(float num1, float num2);
-	float Division(float num1, float num2);
 	int Modulo(int num1, int num2);
 };
 
