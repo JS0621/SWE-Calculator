@@ -2,6 +2,6 @@
 class IBaseCommand
 {
 public:
-	virtual float Execute() = 0;
+	virtual float Execute(float num1, float num2) = 0;
 };
 
