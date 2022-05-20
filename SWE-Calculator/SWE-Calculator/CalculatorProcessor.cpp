@@ -1,15 +1,32 @@
 #include "CalculatorProcessor.h"
 #include "wx/wx.h"
 #include <cmath>
+#include "IBaseCommand.h"
+#include "AddCommand.h"
+#include "SubtractCommand.h"
+#include "MultiplyCommand.h"
+#include "DivideCommand.h"
 
 CalculatorProcessor::CalculatorProcessor() {
-	
+	Add = new AddCommand;
+	commands.push_back(Add);
+	Sub = new SubtractCommand;
+	commands.push_back(Sub);
+	Mult = new MultiplyCommand;
+	commands.push_back(Mult);
+	Div = new DivideCommand;
+	commands.push_back(Div);
+
 }
 CalculatorProcessor* CalculatorProcessor::calcprocessor = nullptr;
 
 CalculatorProcessor::~CalculatorProcessor()
 {
 	delete calcprocessor;
+	delete Add;
+	delete Sub;
+	delete Mult;
+	delete Div;
 }
 
 CalculatorProcessor* CalculatorProcessor::GetInstance()
@@ -24,41 +41,21 @@ float CalculatorProcessor::InputManager(wxString input, float num1, float num2)
 {
 	float result = -1.0f;
 	if (input.Contains("+")) {
-		result = Addition(num1, num2);
+		result = commands[0]->Execute(num1, num2);
 	}
 	else if (input.Contains("-")) {
-		result = Subtraction(num1, num2);
+		result = commands[1]->Execute(num1, num2);
 	}
 	else if (input.Contains("*")) {
-		result = Multiplication(num1, num2);
+		result = commands[2]->Execute(num1, num2);
 	}
 	else if (input.Contains("/")) {
-		result = Division(num1, num2);
+		result = commands[3]->Execute(num1, num2);
 	}
 	else if (input.Contains("%")) {
 		result = Modulo(round(num1), round(num2));
 	}
 	return result;
-}
-
-float CalculatorProcessor::Addition(float num1, float num2)
-{
-	return num1 + num2;
-}
-
-float CalculatorProcessor::Subtraction(float num1, float num2)
-{
-	return num1 - num2;
-}
-
-float CalculatorProcessor::Multiplication(float num1, float num2)
-{
-	return num1 * num2;
-}
-
-float CalculatorProcessor::Division(float num1, float num2)
-{
-	return num1/num2;
 }
 
 int CalculatorProcessor::Modulo(int num1, int num2)
