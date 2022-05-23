@@ -36,7 +36,7 @@ public:
 	//Math functions
 	int Modulo(int num1, int num2);
 
-	int DecimalToBinary(int input);
+	std::string DecimalToBinary(int input);
 
 	int BinaryToDecimal(int input);
 
