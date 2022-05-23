@@ -40,5 +40,8 @@ public:
 
 	int BinaryToDecimal(int input);
 
+	std::string DecimalToHex(int input);
+	
+	int HextoDecimal(std::string input);
 };
 

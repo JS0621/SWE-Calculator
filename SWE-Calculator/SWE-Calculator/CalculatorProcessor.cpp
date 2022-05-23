@@ -8,6 +8,7 @@
 #include "DivideCommand.h"
 #include "Helper.h"
 #include <bitset>
+#include <sstream>
 
 CalculatorProcessor::CalculatorProcessor() {
 	Add = new AddCommand;
@@ -77,4 +78,21 @@ std::string CalculatorProcessor::DecimalToBinary(int input)
 int CalculatorProcessor::BinaryToDecimal(int input)
 {
 	return Helper::BinaryToDecimal(input);
+}
+
+std::string CalculatorProcessor::DecimalToHex(int input)
+{
+	std::ostringstream convert;
+	convert << std::hex << input;
+	std::string result = convert.str();
+	return result;
+}
+
+int CalculatorProcessor::HextoDecimal(std::string input)
+{
+	int dec;
+	std::stringstream convert;
+	convert << std::hex << input;
+	convert >> dec;
+	return dec;
 }

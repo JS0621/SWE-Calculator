@@ -1,8 +1,6 @@
 #include "Main.h"
 #include "ButtonFactory.h"
 #include "CalculatorProcessor.h"
-#include <bitset>
-#include "Helper.h"
 
 BEGIN_EVENT_TABLE(Main, wxFrame)
 //Number buttons
@@ -164,18 +162,39 @@ void Main::OnClick(wxCommandEvent& evt) {
 			numdisplay->SetFont(display);
 			numdisplay->SetLabel(std::to_string(result));
 			isbinary = false;
+			isdecimal = true;
 		}
+		else if (ishex) {
+			std::string hex = (std::string)numdisplay->GetLabel();
+			numdisplay->SetLabel(std::to_string(calcprocessor->HextoDecimal(hex)));
+			ishex = false;
+			isdecimal = true;
+		}
+
 	}
 	//Hex
 	else if (id == 303) {
-		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
-		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
+		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+		if (!ishex) {
+			numdisplay->SetLabel(calcprocessor->DecimalToHex(wxAtoi(numdisplay->GetLabel())));
+			ishex = true;
+			isdecimal = false;
+		}
+		else {
+			std::string hex = (std::string)numdisplay->GetLabel();
+			numdisplay->SetLabel(std::to_string(calcprocessor->HextoDecimal(hex)));
+			ishex = false;
+			isdecimal = true;
+		}
 	}
 	//C
 	else if (id == 300) {
 		isoperator = false;
 		decimalpoint = false;
 		pos = true;
+		isbinary = false;
+		isdecimal = true;
+		ishex = false;
 		numdisplay->SetLabel("");
 	}
 	evt.Skip();
