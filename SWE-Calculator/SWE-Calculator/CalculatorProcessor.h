@@ -35,5 +35,10 @@ public:
 	float InputManager(wxString input, float num1, float num2);
 	//Math functions
 	int Modulo(int num1, int num2);
+
+	int DecimalToBinary(int input);
+
+	int BinaryToDecimal(int input);
+
 };
 

@@ -81,15 +81,17 @@ Main::~Main() {
 void Main::OnClick(wxCommandEvent& evt) {
 	int id = evt.GetId();
 	if (id == 98) {
-		if (pos) {
-			numdisplay->SetLabel("-" + numdisplay->GetLabel());
-			pos = false;
-		}
-		else {
-			wxString str = numdisplay->GetLabel();
-			str.erase(0, 1);
-			numdisplay->SetLabel(str);
-			pos = true;
+		if (isdecimal) {
+			if (pos) {
+				numdisplay->SetLabel("-" + numdisplay->GetLabel());
+				pos = false;
+			}
+			else {
+				wxString str = numdisplay->GetLabel();
+				str.erase(0, 1);
+				numdisplay->SetLabel(str);
+				pos = true;
+			}
 		}
 	}
 	else if (id == 99) {
@@ -100,24 +102,26 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//Numbers
 	else if (id >= 100 && id <= 109) {
-		if (!isbinary) {
+		if (isdecimal) {
 			wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
 			numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
 		}
 	}
 	else if (id == 200) {
 		//Do math here
-		wxString number = numdisplay->GetLabel();
-		number.erase(0, 1);
-		num2 = wxAtof(number);
-		isoperator = false;
-		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
-		float result = calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
-		numdisplay->SetLabel(std::to_string(result));
+		if (isdecimal) {
+			wxString number = numdisplay->GetLabel();
+			number.erase(0, 1);
+			num2 = wxAtof(number);
+			isoperator = false;
+			CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+			float result = calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
+			numdisplay->SetLabel(std::to_string(result));
+		}
 	}
 	//Operators
 	else if (id >= 201 && id <= 205) {
-		if (!isbinary) {
+		if (isdecimal) {
 			decimalpoint = false;
 			if (!isoperator) {
 				wxString number = numdisplay->GetLabel();
@@ -131,17 +135,18 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//Binary
 	else if (id == 301) {
-		if (!isbinary && !decimalpoint) {
-
-			int input = wxAtoi(numdisplay->GetLabel());
-			std::string binary;
-			binary.append(std::bitset<32>(input).to_string());
-			numdisplay->SetLabel(binary);
-			isbinary = true;
-			isoperator = true;
-			isdecimal = false;
-			wxFont display(20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-			numdisplay->SetFont(display);
+		if (!isbinary) {
+			if (!decimalpoint) {
+				int input = wxAtoi(numdisplay->GetLabel());
+				std::string binary;
+				binary.append(std::bitset<32>(input).to_string());
+				numdisplay->SetLabel(binary);
+				isbinary = true;
+				isoperator = true;
+				isdecimal = false;
+				wxFont display(20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
+				numdisplay->SetFont(display);
+			}
 		}
 		else {
 			int result = Helper::BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
@@ -153,8 +158,10 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//Dec
 	else if (id == 302) {
-		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
-		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
+		if (isbinary) {
+
+			CalculatorProcessor.BinarytoDecimal();
+		}
 	}
 	//Hex
 	else if (id == 303) {

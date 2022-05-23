@@ -6,6 +6,8 @@
 #include "SubtractCommand.h"
 #include "MultiplyCommand.h"
 #include "DivideCommand.h"
+#include "Helper.h"
+#include <bitset>
 
 CalculatorProcessor::CalculatorProcessor() {
 	Add = new AddCommand;
@@ -61,4 +63,18 @@ float CalculatorProcessor::InputManager(wxString input, float num1, float num2)
 int CalculatorProcessor::Modulo(int num1, int num2)
 {
 	return num1%num2;
+}
+
+
+
+std::string CalculatorProcessor::DecimalToBinary(int input)
+{
+	std::string binary;
+	binary.append(std::bitset<32>(input).to_string());
+	return binary;
+}
+
+int CalculatorProcessor::BinaryToDecimal(int input)
+{
+	return Helper::BinaryToDecimal(input);
 }
