@@ -70,8 +70,7 @@ int CalculatorProcessor::Modulo(int num1, int num2)
 
 std::string CalculatorProcessor::DecimalToBinary(int input)
 {
-	std::string binary;
-	binary.append(std::bitset<32>(input).to_string());
+	std::string binary = std::bitset<32>(input).to_string();
 	return binary;
 }
 

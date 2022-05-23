@@ -134,8 +134,8 @@ void Main::OnClick(wxCommandEvent& evt) {
 	//Binary
 	else if (id == 301) {
 		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
-		if (!isbinary) {
-			if (!decimalpoint) {
+		if (!decimalpoint) {
+			if (!isbinary) {
 				numdisplay->SetLabel(calcprocessor->DecimalToBinary(wxAtoi(numdisplay->GetLabel())));
 				isbinary = true;
 				isoperator = true;
@@ -143,13 +143,14 @@ void Main::OnClick(wxCommandEvent& evt) {
 				wxFont display(20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
 				numdisplay->SetFont(display);
 			}
-		}
-		else {
-			int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
-			wxFont display(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-			numdisplay->SetFont(display);
-			numdisplay->SetLabel(std::to_string(result));
-			isbinary = false;
+
+			else {
+				int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
+				wxFont display(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
+				numdisplay->SetFont(display);
+				numdisplay->SetLabel(std::to_string(result));
+				isbinary = false;
+			}
 		}
 	}
 	//Dec
@@ -175,16 +176,18 @@ void Main::OnClick(wxCommandEvent& evt) {
 	//Hex
 	else if (id == 303) {
 		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
-		if (!ishex) {
-			numdisplay->SetLabel(calcprocessor->DecimalToHex(wxAtoi(numdisplay->GetLabel())));
-			ishex = true;
-			isdecimal = false;
-		}
-		else {
-			std::string hex = (std::string)numdisplay->GetLabel();
-			numdisplay->SetLabel(std::to_string(calcprocessor->HextoDecimal(hex)));
-			ishex = false;
-			isdecimal = true;
+		if (!isdecimal) {
+			if (!ishex) {
+				numdisplay->SetLabel(calcprocessor->DecimalToHex(wxAtoi(numdisplay->GetLabel())));
+				ishex = true;
+				isdecimal = false;
+			}
+			else {
+				std::string hex = (std::string)numdisplay->GetLabel();
+				numdisplay->SetLabel(std::to_string(calcprocessor->HextoDecimal(hex)));
+				ishex = false;
+				isdecimal = true;
+			}
 		}
 	}
 	//C
