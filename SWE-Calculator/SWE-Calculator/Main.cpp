@@ -176,7 +176,7 @@ void Main::OnClick(wxCommandEvent& evt) {
 	//Hex
 	else if (id == 303) {
 		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
-		if (!isdecimal) {
+		if (!decimalpoint) {
 			if (!ishex) {
 				numdisplay->SetLabel(calcprocessor->DecimalToHex(wxAtoi(numdisplay->GetLabel())));
 				ishex = true;
