@@ -30,7 +30,7 @@ int modresult = calcprocessor->InputManager("%5", 5, 3);//should give 2
 std::string binary = calcprocessor->DecimalToBinary(3);//Should give ...011
 
 //Bin -> Dec
-int bindec = calcprocessor->BinaryToDecimal(11);//Should give 
+int bindec = calcprocessor->BinaryToDecimal(11);//Should give 3
 
 //Dec-> Hex
 std::string hex = calcprocessor->DecimalToHex(255);//should give ff
