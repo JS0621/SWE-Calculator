@@ -35,5 +35,13 @@ public:
 	float InputManager(wxString input, float num1, float num2);
 	//Math functions
 	int Modulo(int num1, int num2);
+
+	std::string DecimalToBinary(int input);
+
+	int BinaryToDecimal(int input);
+
+	std::string DecimalToHex(int input);
+	
+	int HextoDecimal(std::string input);
 };
 

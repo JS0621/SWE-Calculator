@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <bitset>
 
 namespace Helper
 {
@@ -91,6 +92,19 @@ namespace Helper
 	void PrintOct(int number) //Will automatically new line after running, returns to decimal
 	{
 		std::cout << std::oct << number << std::endl << std::dec;
+	}
+
+	std::string DecimalToBinary(int input)
+	{
+		std::string binary = std::bitset<32>(input).to_string();
+		for (int i = 0; i < 32; ++i) {
+			if (stoi(binary.substr(i)) != stoi(binary)) {
+				binary = binary.substr(i - 1);
+				break;
+			}
+
+		}
+		return binary;
 	}
 
 	int BinaryToDecimal(int input)

@@ -1,8 +1,6 @@
 #include "Main.h"
 #include "ButtonFactory.h"
 #include "CalculatorProcessor.h"
-#include <bitset>
-#include "Helper.h"
 
 BEGIN_EVENT_TABLE(Main, wxFrame)
 //Number buttons
@@ -81,15 +79,17 @@ Main::~Main() {
 void Main::OnClick(wxCommandEvent& evt) {
 	int id = evt.GetId();
 	if (id == 98) {
-		if (pos) {
-			numdisplay->SetLabel("-" + numdisplay->GetLabel());
-			pos = false;
-		}
-		else {
-			wxString str = numdisplay->GetLabel();
-			str.erase(0, 1);
-			numdisplay->SetLabel(str);
-			pos = true;
+		if (isdecimal) {
+			if (pos) {
+				numdisplay->SetLabel("-" + numdisplay->GetLabel());
+				pos = false;
+			}
+			else {
+				wxString str = numdisplay->GetLabel();
+				str.erase(0, 1);
+				numdisplay->SetLabel(str);
+				pos = true;
+			}
 		}
 	}
 	else if (id == 99) {
@@ -100,24 +100,26 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//Numbers
 	else if (id >= 100 && id <= 109) {
-		if (!isbinary) {
+		if (isdecimal) {
 			wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
 			numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
 		}
 	}
 	else if (id == 200) {
 		//Do math here
-		wxString number = numdisplay->GetLabel();
-		number.erase(0, 1);
-		num2 = wxAtof(number);
-		isoperator = false;
-		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
-		float result = calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
-		numdisplay->SetLabel(std::to_string(result));
+		if (isdecimal) {
+			wxString number = numdisplay->GetLabel();
+			number.erase(0, 1);
+			num2 = wxAtof(number);
+			isoperator = false;
+			CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+			float result = calcprocessor->InputManager(numdisplay->GetLabel(), num1, num2);
+			numdisplay->SetLabel(std::to_string(result));
+		}
 	}
 	//Operators
 	else if (id >= 201 && id <= 205) {
-		if (!isbinary) {
+		if (isdecimal) {
 			decimalpoint = false;
 			if (!isoperator) {
 				wxString number = numdisplay->GetLabel();
@@ -131,41 +133,66 @@ void Main::OnClick(wxCommandEvent& evt) {
 	}
 	//Binary
 	else if (id == 301) {
-		if (!isbinary && !decimalpoint) {
+		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+		if (!decimalpoint) {
+			if (!isbinary) {
+				numdisplay->SetLabel(calcprocessor->DecimalToBinary(wxAtoi(numdisplay->GetLabel())));
+				isbinary = true;
+				isoperator = true;
+				isdecimal = false;
+			}
 
-			int input = wxAtoi(numdisplay->GetLabel());
-			std::string binary;
-			binary.append(std::bitset<32>(input).to_string());
-			numdisplay->SetLabel(binary);
-			isbinary = true;
-			isoperator = true;
-			isdecimal = false;
-			wxFont display(20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-			numdisplay->SetFont(display);
-		}
-		else {
-			int result = Helper::BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
-			wxFont display(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-			numdisplay->SetFont(display);
-			numdisplay->SetLabel(std::to_string(result));
-			isbinary = false;
+			else {
+				int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
+				numdisplay->SetLabel(std::to_string(result));
+				isbinary = false;
+				isdecimal = true;
+			}
 		}
 	}
 	//Dec
 	else if (id == 302) {
-		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
-		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
+		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+
+		if (isbinary) {
+			int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
+			numdisplay->SetLabel(std::to_string(result));
+			isbinary = false;
+			isdecimal = true;
+		}
+		else if (ishex) {
+			std::string hex = (std::string)numdisplay->GetLabel();
+			numdisplay->SetLabel(std::to_string(calcprocessor->HextoDecimal(hex)));
+			ishex = false;
+			isdecimal = true;
+		}
+
 	}
 	//Hex
 	else if (id == 303) {
-		wxButton* btn = dynamic_cast<wxButton*>(evt.GetEventObject());
-		numdisplay->SetLabel(numdisplay->GetLabel() + btn->GetLabel());
+		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
+		if (!decimalpoint) {
+			if (!ishex) {
+				numdisplay->SetLabel(calcprocessor->DecimalToHex(wxAtoi(numdisplay->GetLabel())));
+				ishex = true;
+				isdecimal = false;
+			}
+			else {
+				std::string hex = (std::string)numdisplay->GetLabel();
+				numdisplay->SetLabel(std::to_string(calcprocessor->HextoDecimal(hex)));
+				ishex = false;
+				isdecimal = true;
+			}
+		}
 	}
 	//C
 	else if (id == 300) {
 		isoperator = false;
 		decimalpoint = false;
 		pos = true;
+		isbinary = false;
+		isdecimal = true;
+		ishex = false;
 		numdisplay->SetLabel("");
 	}
 	evt.Skip();
