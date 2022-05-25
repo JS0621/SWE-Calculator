@@ -140,16 +140,13 @@ void Main::OnClick(wxCommandEvent& evt) {
 				isbinary = true;
 				isoperator = true;
 				isdecimal = false;
-				wxFont display(20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-				numdisplay->SetFont(display);
 			}
 
 			else {
 				int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
-				wxFont display(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-				numdisplay->SetFont(display);
 				numdisplay->SetLabel(std::to_string(result));
 				isbinary = false;
+				isdecimal = true;
 			}
 		}
 	}
@@ -159,8 +156,6 @@ void Main::OnClick(wxCommandEvent& evt) {
 
 		if (isbinary) {
 			int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
-			wxFont display(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-			numdisplay->SetFont(display);
 			numdisplay->SetLabel(std::to_string(result));
 			isbinary = false;
 			isdecimal = true;

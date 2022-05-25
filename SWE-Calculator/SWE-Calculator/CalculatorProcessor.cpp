@@ -1,13 +1,15 @@
 #include "CalculatorProcessor.h"
 #include "wx/wx.h"
-#include <cmath>
 #include "IBaseCommand.h"
 #include "AddCommand.h"
 #include "SubtractCommand.h"
 #include "MultiplyCommand.h"
 #include "DivideCommand.h"
 #include "Helper.h"
+#include <cmath>
 #include <bitset>
+#include <iostream>
+#include <string>
 #include <sstream>
 
 CalculatorProcessor::CalculatorProcessor() {
@@ -71,6 +73,13 @@ int CalculatorProcessor::Modulo(int num1, int num2)
 std::string CalculatorProcessor::DecimalToBinary(int input)
 {
 	std::string binary = std::bitset<32>(input).to_string();
+	for (int i = 0; i < 32; ++i) {
+		if (stoi(binary.substr(i)) != stoi(binary)) {
+			binary = binary.substr(i - 1);
+			break;
+		}
+
+	}
 	return binary;
 }
 
