@@ -5,7 +5,7 @@ class ButtonFactory
 
 public:
 	ButtonFactory();
-	wxButton* CreateButton(wxWindow* window, int id, std::string label, wxPoint point,
+	wxButton* CreateButton(wxWindow* window, int id, wxString label, wxPoint point,
 		wxSize size);
 };
 

@@ -135,7 +135,7 @@ int main()
 
 	wxButton* btn6 = bTest.CreateButtonLabel1000(&DummyFrame, 1000, "1000", wxPoint(100, 100), wxSize(100, 100));
 	std::cout << "CreateButtonLabel1000: ";
-	if (btn6->GetLabel() == (wxString)"1000")
+	if (btn6->GetLabel().CompareTo((wxString)"1000"))
 		std::cout << "PASS\n";
 	else
 		std::cout << "FAIL\n";
@@ -143,7 +143,7 @@ int main()
 
 	wxButton* btn7 = bTest.CreateButtonLabel1000(&DummyFrame, 2000, "2000", wxPoint(100, 100), wxSize(100, 100));
 	std::cout << "CreateButtonLabel2000: ";
-	if (btn7->GetLabel() == (wxString)"2000")
+	if (btn7->GetLabel().CompareTo((wxString)"2000"))
 		std::cout << "PASS\n";
 	else
 		std::cout << "FAIL\n";
@@ -151,7 +151,7 @@ int main()
 
 	wxButton* btn8 = bTest.CreateButtonLabel3000(&DummyFrame, 3000, "3000", wxPoint(100, 100), wxSize(100, 100));
 	std::cout << "CreateButtonLabel3000: ";
-	if (btn8->GetLabel() == (wxString)"3000")
+	if (btn8->GetLabel().CompareTo((wxString)"3000"))
 		std::cout << "PASS\n";
 	else
 		std::cout << "FAIL\n";
@@ -159,7 +159,7 @@ int main()
 
 	wxButton* btn9 = bTest.CreateButtonLabel4000(&DummyFrame, 4000, "4000", wxPoint(100, 100), wxSize(100, 100));
 	std::cout << "CreateButtonLabel4000: ";
-	if (btn9->GetLabel() == (wxString)"4000")
+	if (btn9->GetLabel().CompareTo((wxString)"4000"))
 		std::cout << "PASS\n";
 	else
 		std::cout << "FAIL\n";
@@ -167,7 +167,7 @@ int main()
 
 	wxButton* btn10 = bTest.CreateButtonLabel5000(&DummyFrame, 5000, "5000", wxPoint(100, 100), wxSize(100, 100));
 	std::cout << "CreateButtonLabel5000: ";
-	if (btn10->GetLabel() == (wxString)"5000")
+	if (btn10->GetLabel().CompareTo((wxString)"5000"))
 		std::cout << "PASS\n";
 	else
 		std::cout << "FAIL\n";
