@@ -38,7 +38,7 @@ public:
 
 	std::string DecimalToBinary(int input);
 
-	int BinaryToDecimal(int input);
+	int BinaryToDecimal(std::string input);
 
 	std::string DecimalToHex(int input);
 	

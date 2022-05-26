@@ -65,7 +65,7 @@ float CalculatorProcessor::InputManager(wxString input, float num1, float num2)
 
 int CalculatorProcessor::Modulo(int num1, int num2)
 {
-	return num1%num2;
+	return num1 % num2;
 }
 
 
@@ -73,17 +73,17 @@ int CalculatorProcessor::Modulo(int num1, int num2)
 std::string CalculatorProcessor::DecimalToBinary(int input)
 {
 	std::string binary = std::bitset<32>(input).to_string();
-	for (int i = 0; i < 32; ++i) {
-		if (stoi(binary.substr(i)) != stoi(binary)) {
-			binary = binary.substr(i - 1);
-			break;
-		}
-
+	size_t first1 = binary.find('1');
+	if (first1 == std::string::npos) {
+		return 0;
 	}
-	return binary;
+	else {
+		binary = binary.substr(first1);
+		return binary;
+	}
 }
 
-int CalculatorProcessor::BinaryToDecimal(int input)
+int CalculatorProcessor::BinaryToDecimal(std::string input)
 {
 	return Helper::BinaryToDecimal(input);
 }

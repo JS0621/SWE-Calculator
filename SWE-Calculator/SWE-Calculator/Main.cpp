@@ -141,9 +141,8 @@ void Main::OnClick(wxCommandEvent& evt) {
 				isoperator = true;
 				isdecimal = false;
 			}
-
 			else {
-				int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
+				int result = calcprocessor->BinaryToDecimal((std::string)(numdisplay->GetLabel()));
 				numdisplay->SetLabel(std::to_string(result));
 				isbinary = false;
 				isdecimal = true;
@@ -155,7 +154,7 @@ void Main::OnClick(wxCommandEvent& evt) {
 		CalculatorProcessor* calcprocessor = CalculatorProcessor::GetInstance();
 
 		if (isbinary) {
-			int result = calcprocessor->BinaryToDecimal(wxAtoi(numdisplay->GetLabel()));
+			int result = calcprocessor->BinaryToDecimal((std::string)(numdisplay->GetLabel()));
 			numdisplay->SetLabel(std::to_string(result));
 			isbinary = false;
 			isdecimal = true;

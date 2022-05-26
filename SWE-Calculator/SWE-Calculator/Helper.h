@@ -107,20 +107,10 @@ namespace Helper
 		return binary;
 	}
 
-	int BinaryToDecimal(int input)
+	int BinaryToDecimal(std::string input)
 	{
 		int decimal = 0;
-		int base = 1;
-
-		int temp = input;
-		while (temp) {
-			int last_digit = temp % 10;
-			temp = temp / 10;
-
-			decimal += last_digit * base;
-
-			base = base * 2;
-		}
+		decimal = stoi(input, 0, 2);
 
 		return decimal;
 	}
